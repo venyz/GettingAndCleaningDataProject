@@ -16,4 +16,4 @@ data <- as.data.frame(dataYLabels);
 # …continuing with the subjects
 data$Subject <- subjects$V1;
 # …and adding the mean and std dev variable observations, using descriptive variable names
-data[make.names(featureNames$V2[grep("mean|std", featureNames$V2)])] <- dataX[grep("mean|std", featureNames$V2)]
+data[make.names(featureNames$V2[grep("mean\\(|std", featureNames$V2)])] <- dataX[grep("mean\\(|std", featureNames$V2)]
