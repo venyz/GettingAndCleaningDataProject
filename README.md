@@ -47,5 +47,15 @@ descriptive variable names
 
     data[make.names(featureNames$V2[grep("mean\\(|std", featureNames$V2)])] <- dataX[grep("mean\\(|std", featureNames$V2)]
 
+Now we summarise the data with means by activity and subject …by first
+preparing the dots component of the call to summarise making sure we use
+the proper variable names
+
+    dots <- sapply(featureNames$V2[grep("mean\\(|std", featureNames$V2)], function(x) substitute(mean(x), list(x=as.name(make.names(x)))));
+
+…and then performing the summarisation on grouped data
+
+    dataSummary <- do.call(summarise, c(list(.data=group_by(data, Activity, Subject)), dots));
+
 Detailed information on the included variables is avialable in
 CodeBook.md

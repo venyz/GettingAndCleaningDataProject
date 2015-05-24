@@ -17,3 +17,9 @@ data <- as.data.frame(dataYLabels);
 data$Subject <- subjects$V1;
 # …and adding the mean and std dev variable observations, using descriptive variable names
 data[make.names(featureNames$V2[grep("mean\\(|std", featureNames$V2)])] <- dataX[grep("mean\\(|std", featureNames$V2)]
+
+# Summarising the data with means by activity and subject
+# first preparing the dots component of the call to summarise making sure we use the proper variable names
+dots <- sapply(featureNames$V2[grep("mean\\(|std", featureNames$V2)], function(x) substitute(mean(x), list(x=as.name(make.names(x)))));
+# …and then perform the summarisation on grouped data
+dataSummary <- do.call(summarise, c(list(.data=group_by(data, Activity, Subject)), dots));
